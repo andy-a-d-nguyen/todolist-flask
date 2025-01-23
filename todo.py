@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify, abort, request, make_response
 from flaskext.mysql import MySQL
 from flask_cors import CORS
@@ -10,9 +12,9 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuring MySQL database
-app.config["MYSQL_DATABASE_HOST"] = "localhost"
-app.config["MYSQL_DATABASE_USER"] = "root"
-app.config["MYSQL_DATABASE_PASSWORD"] = "root"
+app.config["MYSQL_DATABASE_HOST"] = os.environ["MYSQL_DATABASE_HOST"]
+app.config["MYSQL_DATABASE_USER"] = os.environ["MYSQL_DATABASE_USER"]
+app.config["MYSQL_DATABASE_PASSWORD"] = os.environ["MYSQL_DATABASE_PASSWORD"]
 app.config["MYSQL_DATABASE_DB"] = "todo_db"
 app.config["MYSQL_DATABASE_PORT"] = 3306
 mysql = MySQL()
