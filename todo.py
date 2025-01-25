@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify, abort, request, make_response, send_from_directory
+from flask import Flask, jsonify, abort, request, make_response, render_template
 from flaskext.mysql import MySQL
 from flask_cors import CORS
 
@@ -130,7 +130,7 @@ def remove_task(task):
 # Set up Flask routes for API
 @app.route("/index")
 def index():
-    return send_from_directory(os.getcwd(), "index.html")
+    return render_template("index.html", server_url=os.environ["SERVER_URL"])
 
 
 @app.route("/")
