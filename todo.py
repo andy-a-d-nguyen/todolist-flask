@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify, abort, request, make_response
+from flask import Flask, jsonify, abort, request, make_response, send_from_directory
 from flaskext.mysql import MySQL
 from flask_cors import CORS
 
@@ -128,6 +128,11 @@ def remove_task(task):
 
 
 # Set up Flask routes for API
+@app.route("/index")
+def index():
+    return send_from_directory(os.getcwd(), "index.html")
+
+
 @app.route("/")
 def home():
     """Home route that returns a welcome message."""
@@ -144,7 +149,7 @@ def get_tasks():
 def get_task(task_id):
     """API route to retrieve a specific task by ID."""
     task = find_task(task_id)
-    if task == None:
+    if task is None:
         abort(404)
     return jsonify({"task found": task})
 
@@ -152,7 +157,7 @@ def get_task(task_id):
 @app.route("/todos", methods=["POST"])
 def add_task():
     """API route to add a new task."""
-    if not request.json or not "title" in request.json:
+    if not request.json or "title" not in request.json:
         abort(400)
     return (
         jsonify(
@@ -170,7 +175,7 @@ def add_task():
 def update_task(task_id):
     """API route to update an existing task."""
     task = find_task(task_id)
-    if task == None:
+    if task is None:
         abort(404)
     if not request.json:
         abort(400)
@@ -184,7 +189,7 @@ def update_task(task_id):
 def delete_task(task_id):
     """API route to delete a task."""
     task = find_task(task_id)
-    if task == None:
+    if task is None:
         abort(404)
     return jsonify({"result": remove_task(task)})
 
@@ -204,4 +209,4 @@ def bad_request(error):
 if __name__ == "__main__":
     init_todo_db()
 
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host="127.0.0.1", port=8080)
