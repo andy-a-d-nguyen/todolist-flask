@@ -17,6 +17,7 @@ app.config["MYSQL_DATABASE_USER"] = os.environ["MYSQL_DATABASE_USER"]
 app.config["MYSQL_DATABASE_PASSWORD"] = os.environ["MYSQL_DATABASE_PASSWORD"]
 app.config["MYSQL_DATABASE_DB"] = "todo_db"
 app.config["MYSQL_DATABASE_PORT"] = 3306
+server_port = 5000
 mysql = MySQL()
 mysql.init_app(app)
 connection = mysql.connect()
@@ -130,7 +131,9 @@ def remove_task(task):
 # Set up Flask routes for API
 @app.route("/index")
 def index():
-    return render_template("index.html", server_url=os.environ["SERVER_URL"])
+    return render_template(
+        "index.html", server_url=f"{os.environ["SERVER_URL"]}:{server_port}"
+    )
 
 
 @app.route("/")
@@ -209,4 +212,4 @@ def bad_request(error):
 if __name__ == "__main__":
     init_todo_db()
 
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=server_port)
