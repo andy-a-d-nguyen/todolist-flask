@@ -33,11 +33,11 @@ def init_todo_db():
     # Create new table
     todos_table = """
     CREATE TABLE todo_db.todos(
-        task_id INT NOT NULL AUTO_INCREMENT,
-        title VARCHAR(100) NOT NULL,
-        description VARCHAR(200),
-        is_done BOOLEAN NOT NULL DEFAULT 0,
-        PRIMARY KEY (task_id)
+    task_id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(200),
+    is_done BOOLEAN NOT NULL DEFAULT 0,
+    PRIMARY KEY (task_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     """
     # Insert data into table
