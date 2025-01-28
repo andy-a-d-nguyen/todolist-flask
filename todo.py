@@ -200,12 +200,14 @@ def delete_task(task_id):
 @app.errorhandler(404)
 def not_found(error):
     """Error handler for 404 errors."""
+    print(error)
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
 @app.errorhandler(400)
 def bad_request(error):
     """Error handler for 400 errors."""
+    print(error)
     return make_response(jsonify({"error": "Bad request"}), 400)
 
 
